@@ -2,6 +2,8 @@
 
 Video aspect ratio management for video.js.
 
+![](screenshot.png)
+
 ## Table of Contents
 
 <!-- START doctoc -->

@@ -1,7 +1,10 @@
-import videojs from 'video.js';
-import {version as VERSION} from '../package.json';
+import videojs from "video.js";
+import { version as VERSION } from "../package.json";
 
-const Plugin = videojs.getPlugin('plugin');
+import ResizerButton from "./button";
+import ResizerPanel from "./panel";
+
+const Plugin = videojs.getPlugin("plugin");
 
 // Default options for the plugin.
 const defaults = {};
@@ -12,7 +15,6 @@ const defaults = {};
  * See: https://blog.videojs.com/feature-spotlight-advanced-plugins/
  */
 class AspectRatioPanel extends Plugin {
-
   /**
    * Create a AspectRatioPanel plugin instance.
    *
@@ -33,8 +35,35 @@ class AspectRatioPanel extends Plugin {
     this.options = videojs.mergeOptions(defaults, options);
 
     this.player.ready(() => {
-      this.player.addClass('vjs-aspect-ratio-panel');
+      this.player.addClass("vjs-aspect-ratio-panel");
+
+      if (player.techName_ != "Html5") {
+        return false;
+      }
+
+      player.on(["loadedmetadata"], function (e) {
+        if (
+          player.aspect_ratio_initialized == "undefined" ||
+          player.aspect_ratio_initialized == true
+        ) {
+        } else {
+          player.aspect_ratio_initialized = true;
+          var controlBar = player.controlBar;
+          var fullscreenToggle = controlBar.getChild("fullscreenToggle").el();
+          controlBar
+            .el()
+            .insertBefore(
+              controlBar.addChild("ResizerButton").el(),
+              fullscreenToggle
+            );
+
+          player.addChild("ResizerPanel");
+        }
+      });
     });
+
+    videojs.registerComponent("ResizerButton", ResizerButton);
+    videojs.registerComponent("ResizerPanel", ResizerPanel);
   }
 }
 
@@ -45,6 +74,6 @@ AspectRatioPanel.defaultState = {};
 AspectRatioPanel.VERSION = VERSION;
 
 // Register the plugin with video.js.
-videojs.registerPlugin('aspectRatioPanel', AspectRatioPanel);
+videojs.registerPlugin("aspectRatioPanel", AspectRatioPanel);
 
 export default AspectRatioPanel;

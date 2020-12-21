@@ -1,12 +1,17 @@
 {
   "name": "@yangkghjh/videojs-aspect-ratio-panel",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Video aspect ratio management for video.js.",
   "main": "dist/videojs-aspect-ratio-panel.cjs.js",
   "module": "dist/videojs-aspect-ratio-panel.es.js",
   "generator-videojs-plugin": {
     "version": "7.6.3"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yangkghjh/videojs-aspect-ratio-panel"
+  },
+  "homepage": "https://github.com/yangkghjh/videojs-aspect-ratio-panel",
   "browserslist": [
     "defaults",
     "ie 11"
